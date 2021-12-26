@@ -1,19 +1,25 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import Head from "next/head";
 import getJsonData from "../lib/getJsonData";
 import { shimmer, toBase64 } from "../lib/blur";
 
 export default function Projects({ projects }) {
   return (
-    <section id="projects">
-      <div className="grid grid-cols-1 gap-4 mt-20 md:my-auto">
-        {projects &&
-          projects.map(item => (
-            <ProjectListItem key={item.projectName} {...item} />
-          ))}
-      </div>
-    </section>
+    <div>
+      <Head>
+        <title>My Projects</title>
+      </Head>
+      <section id="projects">
+        <div className="grid grid-cols-1 gap-4 mt-20 md:my-auto">
+          {projects &&
+            projects.map(item => (
+              <ProjectListItem key={item.projectName} {...item} />
+            ))}
+        </div>
+      </section>
+    </div>
   );
 }
 

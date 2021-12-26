@@ -14,7 +14,7 @@ export default function handler(req, res) {
       {
         id: 2,
         projectName: "Old HiTekRedneck.io",
-        projectImg: "/images/hello-world.png",
+        projectImg: "/images/hitekredneck.png",
         projectLink: "https://bs.hitekredneck.io",
         projectDescription:
           "This was my original portfolio site made with a static Bootstrap templated site.",
