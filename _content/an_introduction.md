@@ -36,6 +36,10 @@ I am unfortunately no longer with my original tech company but did make a move t
 
 I built this site to put my work out there. I would love to move over into a Front End or even Full Stack Developer Role. While I love what I do in Networking, it doesn't bring me the joy and calm that coding does. I plan to write some technical blog posts on the technologies that interest me and maybe even some that don't. It's all up in the air right now.
 
+### Other interesting information about me:
+
+I am an automotive enthusiast. I like everything from old school Hot Rods to Imports to Supercars. I currently own a GMC Sierra Denali, an 04 Acura RSX, and a 49 Chevy truck. I love working on cars in all facets. I am a railfan (person who loves trains) and model railroader. I am an amateur photographer and enjoy any time I can break out my camera. I like almost all things SCI-FI including both StarTrek and Star Wars. My favorite shows are NCIS (all of them), FireFly, The Good Doctor, and Eureka. My favorite movies are Serenity (the one that is in the FireFly universe), American Graffiti, Gone in 60 Seconds (both the original and the remake), and Dazed and Confused.
+
 ### Wrapping Up
 
 Thank you for browsing and reading this. If you like what you see here, send me over a tag on Twitter (link in the footer) or feel free to test drive my contact page.
