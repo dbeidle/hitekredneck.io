@@ -49,7 +49,7 @@ export default function handler(req, res) {
           "React",
           "Redux",
           "ReduxSaga",
-          "Firebase",
+          "Google Firebase",
           "Sass",
           "Stripe API",
           "Google Oauth2",
