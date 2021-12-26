@@ -4,7 +4,25 @@ export default function handler(req, res) {
     res.status(200).json([
       {
         id: 1,
-        projectName: "DriveLikeYaStoleIt",
+        projectName: "New HiTekRedneck.io",
+        projectImg: "/images/htrn.png",
+        projectLink: "https://hitekredneck.io",
+        projectDescription:
+          "The site you are currently viewing. Re-designed and re-written with NextJS and Tailwind CSS. I added a Tech Blog to the site. Continuously evolving as I find new ideas to refresh the site..",
+        projectStack: ["Javascript", "React", "NextJS", "TailwindCSS"],
+      },
+      {
+        id: 2,
+        projectName: "Old HiTekRedneck.io",
+        projectImg: "/images/hello-world.png",
+        projectLink: "https://bs.hitekredneck.io",
+        projectDescription:
+          "This was my original portfolio site made with a static Bootstrap templated site.",
+        projectStack: ["HTML", "Bootstrap 5"],
+      },
+      {
+        id: 3,
+        projectName: "DriveLikeYaStoleIt.com",
         projectImg: "/images/dlysi.png",
         projectLink: "https://drivelikeyastoleit.com",
         projectDescription:
@@ -20,16 +38,7 @@ export default function handler(req, res) {
         ],
       },
       {
-        id: 2,
-        projectName: "HiTekRedneck",
-        projectImg: "/images/htrn.png",
-        projectLink: "https://hitekredneck.io",
-        projectDescription:
-          "The site you are currently on. It started as a nice Bootstrap template static site. Re-designed and re-written with NextJS and Tailwind CSS. I added a Tech Blog to the site. Continuously evolving as I find new ideas to refresh the site..",
-        projectStack: ["Javascript", "React", "NextJS", "TailwindCSS"],
-      },
-      {
-        id: 3,
+        id: 4,
         projectName: "Crown Clothing",
         projectImg: "/images/crwn.png",
         projectLink: "https://crwn.drivelikeyastoleit.com",
@@ -47,7 +56,7 @@ export default function handler(req, res) {
         ],
       },
       {
-        id: 4,
+        id: 5,
         projectName: "Face Recognition",
         projectImg: "/images/faces.png",
         projectLink: "https://faces.drivelikeyastoleit.com",
@@ -60,6 +69,15 @@ export default function handler(req, res) {
           "Clarifai API",
           "PostgreSQL",
         ],
+      },
+      {
+        id: 6,
+        projectName: "Hello World",
+        projectImg: "/images/hello-world.png",
+        projectLink: "https://hello-world.hitekredneck.io",
+        projectDescription:
+          "Fun little Hello World app that has a YouTube video of Hello World by Lady Antebellum",
+        projectStack: ["Javascript", "Vue JS", "CSS", "Babel", "ES Lint"],
       },
     ]);
   }
