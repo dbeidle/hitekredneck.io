@@ -4,7 +4,7 @@ layout: "post"
 date: "2021-12-27T22:02:06.006Z"
 summary: "Why I decided to rebuild my portfolio site."
 hero: "hero: "/blog_heros/japan-530347.jpg"
-hero_alt: "Torii Gate"
+hero_alt: "Torii Gate at dusk"
 tags: ["next", "javascript", "react", "blog"]
 ---
 
