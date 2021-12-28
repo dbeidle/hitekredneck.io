@@ -68,7 +68,7 @@ export default () => {
   };
   const sendMail = async props => {
     console.log(props);
-    const res = await fetch("/api/sendmail", {
+    const res = await fetch("https://hitekredneck.io/api/sendmail", {
       method: "post",
       body: JSON.stringify(props),
       headers: {
