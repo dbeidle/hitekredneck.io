@@ -50,26 +50,26 @@ export default () => {
   };
 
   // Call the reCaptcha verification script.
-  const checkCaptcha = async ({ response_key }) => {
-    console.log("firing check captcha");
-    // check response key is provided
-    if (response_key === null) {
-      // return falise if no response key
-      return false;
-    } else {
-      const res = await getCaptchaResults(response_key);
-      // Return true of status is 200 OK else return false.
-      if (res.status === 200) {
-        return true;
-      } else {
-        return false;
-      }
-    }
-  };
+  // const checkCaptcha = async ({ response_key }) => {
+  //   console.log("firing check captcha");
+  //   // check response key is provided
+  //   if (response_key === null) {
+  //     // return falise if no response key
+  //     return false;
+  //   } else {
+  //     const res = await getCaptchaResults(response_key);
+  //     // Return true of status is 200 OK else return false.
+  //     if (res.status === 200) {
+  //       return true;
+  //     } else {
+  //       return false;
+  //     }
+  //   }
+  // };
   const sendMail = async props => {
     console.log(props);
     const res = await fetch("http://localhost:5600/api/sendmail", {
-      method: "post",
+      method: "POST",
       body: JSON.stringify(props),
       headers: {
         "Content-Type": "application/json",
@@ -81,11 +81,16 @@ export default () => {
 
   const validateCaptcha = async () => {
     const token = await recaptchaRef.current.getValue();
-
-    console.log("token", token);
+    const res = await fetch("http://localhost:5600/api/validateCaptcha", {
+      method: "POST",
+      body: JSON.stringify({ captcha: token }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     // Kick off the reCaptcha
-    const a = await checkCaptcha({ response_key: token });
-    setValid(a);
+    console.log(res.ok);
+    setValid(res.ok);
   };
 
   // Handle when the "Send" button is clicked.
