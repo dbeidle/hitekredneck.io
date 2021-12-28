@@ -14,11 +14,6 @@ export default () => {
   const [valid, setValid] = useState(false);
   const recaptchaRef = useRef();
 
-  const URL =
-    process.env.NODE_ENV === "development"
-      ? "localhost:8080"
-      : "localhost:5600";
-
   const handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -48,26 +43,9 @@ export default () => {
     return note.length > 0;
   };
 
-  // Call the reCaptcha verification script.
-  // const checkCaptcha = async ({ response_key }) => {
-  //   console.log("firing check captcha");
-  //   // check response key is provided
-  //   if (response_key === null) {
-  //     // return falise if no response key
-  //     return false;
-  //   } else {
-  //     const res = await getCaptchaResults(response_key);
-  //     // Return true of status is 200 OK else return false.
-  //     if (res.status === 200) {
-  //       return true;
-  //     } else {
-  //       return false;
-  //     }
-  //   }
-  // };
   const sendMail = async props => {
     console.log(props);
-    const res = await fetch("http://localhost:5600/api/sendmail", {
+    const res = await fetch("https://hitekredneck.io/api/sendmail", {
       method: "POST",
       body: JSON.stringify(props),
       headers: {
@@ -80,7 +58,7 @@ export default () => {
 
   const validateCaptcha = async () => {
     const token = await recaptchaRef.current.getValue();
-    const res = await fetch("http://localhost:5600/api/validateCaptcha", {
+    const res = await fetch("https://hitekredneck.io/api/validateCaptcha", {
       method: "POST",
       body: JSON.stringify({ captcha: token }),
       headers: {
