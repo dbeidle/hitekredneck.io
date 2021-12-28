@@ -15,11 +15,6 @@ export default () => {
   const [valid, setValid] = useState(false);
   const recaptchaRef = useRef();
 
-  // const URL =
-  //   process.env.NODE_ENV === "development"
-  //     ? "localhost:8080"
-  //     : "hitekredneck.io";
-
   const handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;
@@ -67,8 +62,12 @@ export default () => {
     }
   };
   const sendMail = async props => {
+    const URL =
+      process.env.NODE_ENV === "development"
+        ? "localhost:8080"
+        : "hitekredneck.io";
     console.log(props);
-    const res = await fetch("https://hitekredneck.io/api/sendmail", {
+    const res = await fetch(`https://${URL}/api/sendmail`, {
       method: "post",
       body: JSON.stringify(props),
       headers: {
