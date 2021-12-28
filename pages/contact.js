@@ -18,11 +18,8 @@ export default () => {
   const URL =
     process.env.NODE_ENV === "development"
       ? "localhost:8080"
-      : "hitekredneck.io:5600";
-  // useEffect(() => {
-  //   // action on update of movies
-  // }, [note]);
-  // Handle any changes to the form fields and save to a useState call.
+      : "hitekredneck.io";
+
   const handleChange = e => {
     e.preventDefault();
     const { name, value } = e.target;

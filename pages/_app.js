@@ -1,6 +1,4 @@
 import "tailwindcss/tailwind.css";
-import NavBar from "../components/navbar";
-import Footer from "../components/footer";
 import "prism-themes/themes/prism-vsc-dark-plus.css"; // Required for code highlighting in code blocks
 import Layout from "../components/layout";
 
