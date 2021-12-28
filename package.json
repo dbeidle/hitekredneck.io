@@ -6,7 +6,7 @@
   "license": "CC-BY-NC-4.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -p 8080",
+    "dev": "next dev -p 5600",
     "build": "next build",
     "start": "next start -p 5600"
   },
