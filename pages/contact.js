@@ -2,7 +2,6 @@ import { useState, useRef } from "react";
 import Head from "next/head";
 import Modal from "../components/modal";
 import ReCAPTCHA from "react-google-recaptcha";
-import getCaptchaResults from "../lib/getCaptchaResults";
 
 export default () => {
   const [note, setNote] = useState({
