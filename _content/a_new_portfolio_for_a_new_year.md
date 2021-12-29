@@ -1,7 +1,7 @@
 ---
 title: "A New Portfolio For A New Year"
 layout: "post"
-date: "2021-12-27T22:02:06.006Z"
+date: "2021-12-29T14:00:34.444Z"
 summary: "Why I decided to rebuild my portfolio site."
 hero: "/blog_heros/japan-530347.jpg"
 hero_alt: "Torii Gate at Dusk"
