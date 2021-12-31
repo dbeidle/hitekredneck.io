@@ -15,7 +15,7 @@ export default ({ title, date, content }) => {
         <h1 className="text-4xl font-medium ">{title}</h1>
         <h2 className="text-md">{date}</h2>
       </div>
-      <article className="pt-3 prose">
+      <article className="pt-3 prose min-w-full">
         <MDXRemote {...content} />
       </article>
     </div>
