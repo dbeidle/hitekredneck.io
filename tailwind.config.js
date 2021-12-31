@@ -44,7 +44,8 @@ module.exports = {
             a: {
               color: "#3182ce",
               "&:hover": {
-                color: "#2c5282",
+                color: "#4682b4",
+                cursor: "pointer",
               },
             },
             h1: {
