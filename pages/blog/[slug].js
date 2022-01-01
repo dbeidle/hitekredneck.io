@@ -10,6 +10,7 @@ export default ({ title, date, content, hero, summary }) => {
     <div className=" w-3/4 lg:w-1/2 px-10 h-full overflow-scroll m-auto text-sb-norm border-sb-dark border-solid border-2 rounded-lg bg-sb-light shadow p-3 mt-20 ">
       <Head>
         <title>{title}</title>
+        <meta name="twitter:card" content={summary} />
         <meta name="description" content={summary} />
         <meta property="og:image" content={hero} />
       </Head>
