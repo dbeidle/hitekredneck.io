@@ -281,7 +281,7 @@ And there you have it. Create a directory under your main project directory call
 
 ```yaml
 ---
-title: "The Trek to NextJS pt2"
+title: "The Trek to NextJS part 2"
 layout: "post"
 date: "2022-01-01T15:27:20.657Z"
 summary: "I had a few issues getting the blog portion to work properly. I explain more in detail"
