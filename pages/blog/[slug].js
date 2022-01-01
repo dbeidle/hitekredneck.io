@@ -10,11 +10,12 @@ export default ({ title, date, content, hero, summary, slug }) => {
     <div className=" w-3/4 lg:w-1/2 px-10 h-full overflow-scroll m-auto text-sb-norm border-sb-dark border-solid border-2 rounded-lg bg-sb-light shadow p-3 mt-20 ">
       <Head>
         <title>{title}</title>
-        <meta name="twitter:card" content={summary} />
-        <meta name="description" content={summary} />
-        <meta property="og:image" content={`https://hitekredneck.io/${hero}`} />
-        <meta name="twitter:site" content="@lifeofdave" />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={title} />
         <meta name="twitter:creator" content="@lifeofdave" />
+        <meta name="description" content={summary} />
+        <meta property="og:site_name" content="HiTekRedneck" />
+        <meta property="og:image" content={`https://hitekredneck.io/${hero}`} />
         <meta
           property="og:url"
           content={`https://hitekredneck.io/blog/${slug}`}
