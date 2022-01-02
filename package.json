@@ -16,7 +16,6 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@fortawesome/react-fontawesome": "^0.1.16",
     "@tailwindcss/typography": "^0.4.1",
-    "axios": "^0.24.0",
     "gray-matter": "^4.0.3",
     "next": "latest",
     "next-mdx-remote": "^3.0.8",
