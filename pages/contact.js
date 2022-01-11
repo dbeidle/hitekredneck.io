@@ -44,7 +44,6 @@ export default () => {
   };
 
   const sendMail = async props => {
-    console.log(props);
     const res = await fetch("https://hitekredneck.io/api/sendmail", {
       method: "POST",
       body: JSON.stringify(props),
@@ -66,7 +65,6 @@ export default () => {
       },
     });
     // Kick off the reCaptcha
-    console.log(res.ok);
     setValid(res.ok);
   };
 
@@ -103,7 +101,6 @@ export default () => {
       // Return Early to keep stop any further processing
       return;
     } else {
-      //TODO: Finish Sendmail functionality
       // Form is submitted and passed to the mail message
       const mail = await sendMail({ note, valid }).then(resp => resp);
       // If response from mail is 200 status code then return success Modal.

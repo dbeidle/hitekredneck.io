@@ -2,7 +2,6 @@ export default async function handler(req, res) {
   const { body, method } = req;
   // Extract the email and captcha code from the request body
   const { captcha } = body;
-  console.log("CAPTCHA", captcha);
   if (method === "POST") {
     // If email or captcha are missing return an error
     if (!captcha) {
