@@ -40,6 +40,15 @@ export default function handler(req, res) {
       },
       {
         id: 4,
+        projectName: "Placeholder",
+        projectImg: "/images/placeholder.png",
+        projectLink: "https://placeholder.hitekredneck.io/docs",
+        projectDescription:
+          "I needed some placeholder images for another project so I built this App to return an image when fetched.",
+        projectStack: ["Python 3", "FastAPI", "Uvicorn", "Pillow"],
+      },
+      {
+        id: 5,
         projectName: "Crown Clothing",
         projectImg: "/images/crwn.png",
         projectLink: "https://crwn.drivelikeyastoleit.com",
@@ -57,7 +66,7 @@ export default function handler(req, res) {
         ],
       },
       {
-        id: 5,
+        id: 6,
         projectName: "Face Recognition",
         projectImg: "/images/faces.png",
         projectLink: "https://faces.drivelikeyastoleit.com",
@@ -72,7 +81,7 @@ export default function handler(req, res) {
         ],
       },
       {
-        id: 6,
+        id: 7,
         projectName: "Hello World",
         projectImg: "/images/hello-world.png",
         projectLink: "https://hello-world.hitekredneck.io",
