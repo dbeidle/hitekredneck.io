@@ -1,0 +1,690 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>Posts by Dave Beidle</title>
+        <link>https://hitekredneck.io</link>
+        <description>Musings about Web Development and other code writing tales.</description>
+        <lastBuildDate>Mon, 17 Jan 2022 02:22:01 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <language>en</language>
+        <item>
+            <title><![CDATA[Adding reCaptcha to NextJS]]></title>
+            <link>https://hitekredneck.io/blog/adding_recaptcha_to_nextjs</link>
+            <guid>https://hitekredneck.io/blog/adding_recaptcha_to_nextjs</guid>
+            <pubDate>Tue, 11 Jan 2022 17:05:36 GMT</pubDate>
+            <content:encoded><![CDATA[
+## The problem
+
+I really didn't want to expose my email address on my blog page like I had in the last version. I think I got lucky that either no one visited the site or no one got ahold of it to be able to start spamming me. To prevent this, I decided to use Google reCaptcha on a contact form that will send me an email whenever someone sends me a message through it.
+
+## The basics
+
+I added a simple form to my project that takes in a person's name, e-mail address, and message in a single component on the application. That was the easy part. I also added in a couple of simple regex validations on the name/email input types and added a validation that the message body can't be empty.
+
+## Google reCaptcha
+
+You will need to setup reCaptcha on the [Google's](https://developers.google.com/recaptcha) website. Then you will need to create a project for reCaptcha. I used v2 with the checkbox to keep it nice and clear what is going on. Make sure you save your API keys and put them into a .env file for easy consumption into the app.
+
+You will get 2 keys, one is a public key, the second is a private key and should not be saved in your project or pushed to Github. I have plans to add an article on the importance of .env files and protecting your API keys at a later date.
+
+## The Code
+
+I used a package called `react-google-recaptcha` in my project. This has a very simple install by way of npm or yarn
+
+```sh
+yarn add react-google-recaptcha
+```
+
+or
+
+```sh
+npm i react-google-recaptcha
+```
+
+Once the installation is complete, You can add it into your contact page with an ES6 import.
+
+```js
+import ReCAPTCHA from "react-google-recaptcha";
+```
+
+In your return for the actual page, you will add it as below.
+
+```jsx
+<ReCAPTCHA
+  ref={recaptchaRef}
+  size="normal"
+  sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_PUBLIC}
+  onChange={() => validateCaptcha()}
+/>
+```
+
+Import useRef and useState from React and create a validateCaptcha function as below. you will utilize the useState ref to verify that the response received was valid.
+
+```jsx
+import { useState, useRef } from "react";
+
+const [valid, setValid] = useState(false);
+const recaptchaRef = useRef();
+
+const validateCaptcha = async () => {
+  const token = await recaptchaRef.current.getValue();
+  const res = await fetch("https://localhost:8080/api/validateCaptcha", {
+    method: "POST",
+    body: JSON.stringify({ captcha: token }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+  // Kick off the reCaptcha
+  setValid(res.ok);
+};
+```
+
+I created a validate captcha API route in my NextJS app.
+
+```js
+export default async function handler(req, res) {
+  const { body, method } = req;
+  // Extract the captcha code from the request body
+  const { captcha } = body;
+  if (method === "POST") {
+    // reCaptcha code is missing return an error
+    if (!captcha) {
+      return res.status(422).json({
+        message: "Unproccesable request, please tick the reCaptcha box.",
+      });
+    }
+    try {
+      // send a request to the Google reCaptcha verify API to verify the captcha code you received
+      const response = await fetch(
+        `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.RECAPTCHA_SECRET}&response=${captcha}`,
+        {
+          headers: {
+            "Content-Type": "application/x-www-form-urlencoded; charset=utf-8",
+          },
+          method: "POST",
+        }
+      );
+      const captchaValidation = await response.json();
+
+      if (captchaValidation.success) {
+        // Return 200 OK if successful
+        return res.status(200).send("OK");
+      }
+
+      return res.status(400).json({
+        message: "Unproccesable request, Invalid captcha code",
+      });
+    } catch (error) {
+      return res.status(422).json({ message: "Something went wrong" });
+    }
+  }
+  // Return 404 if someone queries the API with a method other than POST
+  return res.status(404).send("Not found");
+}
+```
+
+When there is a successful response from the API, you will then use the useState set function in the validate function on the contact page to return True if valid.
+
+The next step is to send data to the backend via another API route to handle the backend email functionality. Then return if it was successful and display a modal letting the user know the request was successful or let them know if they are missing any fields in the form.
+
+## Take Aways
+
+I was able to get this working in my dev environment with no issues but I had a small hiccup when I deployed it to production. I had not thought about the API routes and calling of them on the prod site and left that info as though it were in my dev environment. To that end, I had errors getting the reCaptcha to work until I changed the fetch call in my captchaValidate function to include my fqdn for the site instead of localhost. Once that change was made, my reCaptcha started working properly and the submission of the message started working properly again afterwards.
+]]></content:encoded>
+            <author>dave@hitekredneck.io (Dave Beidle)</author>
+        </item>
+        <item>
+            <title><![CDATA[The Trek to NextJS part 2]]></title>
+            <link>https://hitekredneck.io/blog/the_trek_to_nextjs_part_2</link>
+            <guid>https://hitekredneck.io/blog/the_trek_to_nextjs_part_2</guid>
+            <pubDate>Sat, 01 Jan 2022 15:27:20 GMT</pubDate>
+            <content:encoded><![CDATA[
+## MDX Headaches...
+
+This is a continuation on my trek to rebuilding my site into a NextJS site [Part 1 is here...](https://hitekredneck.io/blog/the_trek_to_nextjs_part_1)
+
+I wanted to make sure I had my blog portion down and ready to go but I did not expect it to be quite so difficult to work with. Getting the main page and the slug working was easy as pie. Getting the code to work with `next-mdx-remote` wasn't quite so easy. I looked up quite a few tutorials online and could not get it to work as it was described. It was starting to irk me and it took me a full day of looking through documentation and online articles and even Youtube videos.
+
+The issue that I came to find out is that all the recent posts and the like I had been reading about were all for the previous version. Even the posts from just after the new release were on the previous version and the documentation was not clear on one major breaking change. I was having an issue getting the acutal post to show up in the slug page. I won't go into detail on the `tailwindcss` classes I used but they are here for your reference. Start by adding the following packages:
+
+```
+yarn add next-mdx-remote grey-matter
+```
+
+In your pages directory, create a new 'blog' directory and in there add an index.js and [slug].js
+
+```
+cd pages
+mkdir blog
+touch blog/index.js && touch blog/[slug].js
+```
+
+### Index.js page:
+
+Starting with the index.js page, import in the packages needed.
+
+```jsx
+import Head from "next/head";
+import Link from "next/link";
+import Image from "next/image";
+import { getAllPosts } from "../../lib/data";
+import { shimmer, toBase64 } from "../../lib/blur";
+import getDate from "../../lib/getDate";
+```
+
+Next you will need to create the main component of the page. What I found I love most about the latest version of React is you don't need to import React into your components. You also don't need to provide a function name on your default export.
+
+```jsx
+export default ({ posts }) => {
+  return (
+    <div>
+      <Head>
+        <title>Blog</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+
+      <div className=" w-5/6 m-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3  gap-4 md:gap-8 mt-20 md:my-auto">
+        {posts.map(item => (
+          <BlogListItem key={item.slug} {...item} />
+        ))}
+      </div>
+    </div>
+  );
+};
+```
+
+In that same file, I added 2 other functions to finish up the general blog posts list and have it shown. The first was the getStaticProps caller. What we are doing here is sorting all items by date and returning them with a specific format that I wanted to use.
+
+```jsx
+export async function getStaticProps() {
+  const allPosts = getAllPosts();
+  const allPostsSorted = allPosts.sort(({ date: a }, { date: b }) => {
+    if (a < b) {
+      return 1;
+    } else if (a > b) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+  return {
+    props: {
+      posts: allPostsSorted.map(({ data, content, slug }) => ({
+        ...data,
+        date: getDate(data.date),
+        content,
+        slug,
+      })),
+    },
+  };
+}
+```
+
+I will dive into the helpers of getAllPosts and getDate pages in a short bit. The next item I had to add was a function to display each blog post item from the .map statement in the default export function.
+
+```jsx
+function BlogListItem({ slug, title, date, summary, hero, hero_alt }) {
+  return (
+    <div className="border text-sb-dark bg-sb-light border-sb-dark shadow hover:shadow-md hover:border-sb-med rounded-md p-4 transition duration-200 ease-in">
+      <div className="block border-b-4 border-sb-dark pb-2">
+        <Link href={`/blog/${slug}`}>
+          <a>
+            {hero && (
+              <Image
+                src={hero}
+                alt={hero_alt}
+                width="100%"
+                height="100%"
+                layout="responsive"
+                placeholder="blur"
+                blurDataURL={`data:image/svg+xml;base64,${toBase64(
+                  shimmer("100%", "75%")
+                )}`}
+              />
+            )}
+            <br />
+            <span className="font-bold">{title}</span>
+          </a>
+        </Link>
+      </div>
+      <div className="text-sb-md text-xs pt-2 font-semibold">{date}</div>
+      <div>{summary}</div>
+    </div>
+  );
+}
+```
+
+### Helper Functions:
+
+I have a folder in my base directory named 'lib' that I use for my helper functions for my site. two of these are the getAllPosts function and my getDate function.
+
+### getAllposts.js:
+
+This file retrieves each mark down file and parses the front matter into a format easily consumed by my display function.
+
+```jsx
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+
+const contentDirectory = path.join(process.cwd(), "_content");
+
+export function getAllPosts() {
+  const allPosts = fs.readdirSync(contentDirectory);
+
+  return allPosts.map(fileName => {
+    const slug = fileName.replace(".md", "");
+    const fileContents = fs.readFileSync(
+      path.join(contentDirectory, fileName),
+      "utf8"
+    );
+    const { data, content } = matter(fileContents);
+    return {
+      data,
+      date: data.date,
+      content,
+      slug,
+    };
+  });
+}
+```
+
+### getDate.js:
+
+This function parses the ISO string for the date into the format that I want to have shown on the site where visible. This could be done much easier if you so require but I like to use the US military format for date which is `dd Month yyyy`. I am not currently using the hours/minutes/ampm in my display but I wrote the code for them and if I desire to use them in the future, I can just add those portions to the return statement.
+
+```jsx
+export default function getDate(date) {
+  // Convert the date string to the locale string and output it as a string
+  const months = [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec",
+  ];
+  const dt = new Date(date).toLocaleString();
+  const month = months[new Date(dt).getMonth()];
+  const day = new Date(dt).getDate();
+  const year = new Date(dt).getFullYear();
+  const hr = new Date(dt).getHours();
+  const ampm = hr >= 12 ? "PM" : "AM";
+  const min = new Date(dt).getMinutes();
+  const minutes = min >= 10 ? min : "0" + min;
+  const hour =
+    ampm === "PM" && hr % 12 === 0
+      ? 12
+      : ampm === "AM" && hr % 12 === 0
+      ? "00"
+      : hr % 12;
+
+  const fullDate = {
+    month,
+    day,
+    year,
+    hour,
+    minutes,
+    ampm,
+  };
+  // Return the date as a string
+  // use the following for time output in the return ${fullDate.hour + ":" + fullDate.minutes} ${fullDate.ampm}
+  return `${fullDate.day} ${fullDate.month} ${fullDate.year}`;
+}
+```
+
+### Tackling the [slug].js file
+
+This is the file that gave me the most trouble. This is where I fully render each blog post to the page for you, the viewer to read. In the examples I found online, they all referenced a source prop on the `<MDXRemote />` component. I tried to use that as my basis but kept getting an error relating to the source prop. After searching and looking at all articles I could find, they all had that source prop but no one had the fix I needed. I then did a search of GitHub for 'MDXRemote' and filtered it on Javascript since I am not using Typescript on this project and I found my answer after digging through a few repositories.
+
+Add the required imports and base for the slug page.
+
+```jsx
+import Head from "next/head";
+import { serialize } from "next-mdx-remote/serialize";
+import { MDXRemote } from "next-mdx-remote";
+import { getAllPosts } from "../../lib/data";
+import getDate from "../../lib/getDate";
+import remarkPrismPlugin from "remark-prism";
+
+export default ({ title, date, content }) => {
+  return (
+    <div className=" w-3/4 lg:w-1/2 px-10 h-full overflow-scroll m-auto text-sb-norm border-sb-dark border-solid border-2 rounded-lg bg-sb-light shadow p-3 mt-20 ">
+      <Head>
+        <title>{title}</title>
+      </Head>
+      <div className="text-sb-dark border-b-2 border-sb-dark border-opacity-75 border-solid pb-2">
+        <h1 className="text-4xl font-medium ">{title}</h1>
+        <h2 className="text-md">{date}</h2>
+      </div>
+      <article className="pt-3 prose min-w-full">
+        <MDXRemote {...content} />
+      </article>
+    </div>
+  );
+};
+```
+
+I am not using the component property of MDX but if you were, you would need to split the components out into their own prop ie: `<MDXRemote {...content} components={components} />`
+
+There are 2 other functions required in the [slug].js file. Those are getStaticProps and getStaticPaths. The getStaticProps is similar to the one we added in the index but with added data to serialize the markdown code to HTML. I added the remarkPrism code highlighting after I got the blog posts to show the way I wanted and was a little of an after-thought honestly.
+
+```jsx
+export async function getStaticProps(context) {
+  const { params } = context;
+  const allPosts = getAllPosts();
+  const { data, content } = allPosts.find(item => item.slug === params.slug);
+  const mdxSource = await serialize(content, {
+    // Needed for highlighting code within code blocks.
+    mdxOptions: {
+      remarkPlugins: [remarkPrismPlugin],
+    },
+  });
+
+  return {
+    props: {
+      ...data,
+      date: getDate(data.date),
+      content: mdxSource,
+    },
+  };
+}
+
+export async function getStaticPaths() {
+  return {
+    paths: getAllPosts().map(post => ({
+      params: {
+        slug: post.slug,
+      },
+    })),
+    fallback: false,
+  };
+}
+```
+
+And there you have it. Create a directory under your main project directory called \_content and toss a couple of .md files in there and you should be good to go. Make sure you add in your front matter into the files in YAML format:
+
+```yaml
+---
+title: "The Trek to NextJS part 2"
+layout: "post"
+date: "2022-01-01T15:27:20.657Z"
+summary: "I had a few issues getting the blog portion to work properly. I explain more in detail"
+hero: "/blog_heros/fuji-sakura.jpg"
+hero_alt: "Mount Fuji with Cherry Blossom Tree"
+tags: ["next", "javascript", "react", "tailwindcss", "blog", "MDX", "Markdown"]
+---
+```
+
+And in the public directory, add a blog_heros directory with any image files you wish to use for that part of the index.js page.
+
+I hope you found this useful and not super annoying. I am just starting out on my tech writing journey and hope to get better at it as I go along.
+
+In my next post, I will go through the steps I had to take to get reCaptcha working on my contact page. Until then, keep coding!
+]]></content:encoded>
+            <author>dave@hitekredneck.io (Dave Beidle)</author>
+        </item>
+        <item>
+            <title><![CDATA[The Trek to NextJS part 1]]></title>
+            <link>https://hitekredneck.io/blog/the_trek_to_nextjs_part_1</link>
+            <guid>https://hitekredneck.io/blog/the_trek_to_nextjs_part_1</guid>
+            <pubDate>Wed, 29 Dec 2021 14:00:34 GMT</pubDate>
+            <content:encoded><![CDATA[
+## Making the decision
+
+I knew I wanted to rebuild my portfolio site to better reflect my skills and still have an easy to update code base. I considered and a few different frameworks before settling on NextJS. I had a run at building the site in Gatsby but I just wasn't feeling the flow of it. I had ofcourse heard of NextJS over time and decided to give it a shot as well as using tailwindcss in the project. I like to keep learning new things to stay on top of what is out there which can be a painpoint for me at times. I had heard good things in the past about both NextJS and TailwindCSS so it was time to give them a shot.
+
+### Creating the new project
+
+I started with a basic template provided by NextJS which was `yarn create next-app --example with-tailwindcss app_name` This built most of the skeleton for me. I then ran `yarn tailwindcss init -p` in the project directory to initialize the tailwind css.
+
+I removed all of the boiler plate from the project and started fresh with an index.js page in the pages directory. I then decided I wanted a couple of specific fonts in the project which caused me to create an \_document.js file in the main directory. I made use of several next components by importing them into this file.
+
+```jsx
+import Document, { Html, Head, Main, NextScript } from "next/document";
+
+class MyDocument extends Document {
+  render() {
+    return (
+      <Html>
+        <Head>
+          <link rel="icon" type="image/png" href="/images/favicon-16x16.png" />
+          <link rel="icon" type="image/png" href="/images/favicon-32x32.png" />
+          <link
+            href="https://fonts.googleapis.com/css2?family=M+PLUS+1+Code&display=swap"
+            rel="stylesheet"></link>
+          <link
+            href="https://fonts.googleapis.com/css2?family=Genos&display=swap"
+            rel="stylesheet"></link>
+        </Head>
+        <link
+          href="https://fonts.googleapis.com/css2?family=VT323&display=swap"
+          rel="stylesheet"
+        />
+        <body className="bg-sb-norm text-white">
+          <Main />
+          <NextScript />
+        </body>
+      </Html>
+    );
+  }
+}
+```
+
+### Adding styles with tailwindcss
+
+I took a little time to figure out the color scheme I wanted to use for the site. I had to edit the `tailwind.config.js` file to bring those colors into the project. You have to be careful how you add colors or elements as you can easily overwrite the tailwindcss that has been brought into your project. To add new information to tailwindcss you need to extend the theme. Which I did to have my colors callable in tailwind css classnames. You can see an example of that in the body tag of the \_document.js above. the `bg-sb-norm` class name gives the whole page a steelblue color. There are several base colors you can choose from to use already in tailwind but I wanted some that weren't in there.
+
+```js
+module.exports = {
+  mode: "jit",
+  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  darkMode: false, // or 'media' or 'class'
+  theme: {
+    extend: {
+      colors: {
+        "sb-norm": "#4682b4",
+        "sb-dark": "#31697e",
+        "sb-light": "#d8f4ff",
+        "sb-med": "#b1eaff",
+      },
+    },
+  },
+};
+```
+
+### The landing page
+
+I then started work on my navbar component. I added a components directory at the root of my project structure and created a new JS file there to provide the basis for the navbar. I decided early on that I wanted to utilize FontAwesome icons to I added them into the project at this time.
+
+```bash
+yarn add @fortawesome/fontawesome-svg-core @fortawesome/free-brands-svg-icons @fortawesome/free-solid-svg-icons @fortawesome/react-fontawesome
+```
+
+I dropped in the imports to the navbar.js page. I knew from a previous project that I would need to add the useState hook from the react library.
+
+```jsx
+import { useState } from "react";
+import Link from "next/link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
+```
+
+The next step was to finish off the navbar component. It took quite a bit of trial and error and refactoring to try and keep the codebase with out too many repeated elements. I created a small function that takes in a string of classes and returns the menu bar in either the mobile/small screen size or the desktop size. I wanted them to be a11y so I made sure when the small menu is opened the focus is put onto the first element in the menu. It took some trial and error learning the tailwind way of doing things but I did like the fact they use a mobile first breakpoint styling.
+
+```jsx
+export default function NavBar() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+    const set_focus = document.getElementById("focus_me");
+    setTimeout(() => {
+      set_focus.focus();
+    }, 1);
+  };
+
+  const Menu = css => {
+    return (
+      <ul className={String(css.classes)} role="dialog" id="menu">
+        <a id="focus_me" href="/about" onClick={isMenuOpen ? toggleMenu : null}>
+          <li className="px-5 py-2 hover:border-b-4 focus:ring-1 focus:ring-sb-dark hover:border-sb-dark hover:border-solid sm:hover:border-sb-light">
+            About
+          </li>
+        </a>
+        <a href="/blog" onClick={isMenuOpen ? toggleMenu : null}>
+          <li className="px-5 py-2 hover:border-b-4 hover:border-sb-dark hover:border-solid sm:hover:border-sb-light">
+            Blog
+          </li>
+        </a>
+        <a href="/projects" onClick={isMenuOpen ? toggleMenu : null}>
+          <li className="px-5 py-2 hover:border-b-4 hover:border-sb-dark hover:border-solid sm:hover:border-sb-light">
+            Projects
+          </li>
+        </a>
+        <a href="/contact" onClick={isMenuOpen ? toggleMenu : null}>
+          <li className="px-5 py-2 hover:border-b-4 hover:border-sb-dark hover:border-solid sm:hover:border-sb-light">
+            Contact
+          </li>
+        </a>
+        <li className="cursor-pointer sm:hidden px-5 py-2 hover:border-b-4 hover:border-sb-dark hover:border-solid sm:hover:border-sb-light">
+          <button onClick={isMenuOpen ? toggleMenu : null}>Close</button>
+        </li>
+      </ul>
+    );
+  };
+
+  return (
+    <nav>
+      <div
+        className="absolute w-full flow-root justify-between mt-3 uppercase font-header tracking-widest border-sb-med border-solid border-b-2 border-opacity-50 pb-4 "
+        id="nav-bar">
+        <div className="m-auto ml-7 float-left inline-flex">
+          <Link href="/">Home</Link>
+        </div>
+        <div className="sm:hidden float-right px-5">
+          <button
+            onClick={toggleMenu}
+            aria-label="Menu"
+            aria-expanded={isMenuOpen}
+            aria-controls="menu">
+            <FontAwesomeIcon icon={faEllipsisV} />
+          </button>
+        </div>
+        {isMenuOpen ? (
+          <Menu
+            aria-hidden={!isMenuOpen}
+            aria-labelledby="menu-btn"
+            classes="absolute w-40 bg-sb-light text-sb-dark border-solid border-black border-2 flex flex-col top-5 right-6 items-center py-3 z-10"
+          />
+        ) : (
+          <Menu classes="absolute -top-2 right-0 m-auto mr-5 float-right hidden sm:inline-flex " />
+        )}
+      </div>
+    </nav>
+  );
+}
+```
+
+Once I worked out the quirks of the small screen menu and positioning the navbar and menu items, I added the navbar component into the index.js file.
+
+This will conclude part 1 in this series. I will try to guide you the best that I can in how I built my app and the mistakes I made along the way.
+
+You can view the full source code for this site on [Github](https://github.com/dbeidle/hitekredneck.io)
+]]></content:encoded>
+            <author>dave@hitekredneck.io (Dave Beidle)</author>
+        </item>
+        <item>
+            <title><![CDATA[A New Portfolio For A New Year]]></title>
+            <link>https://hitekredneck.io/blog/a_new_portfolio_for_a_new_year</link>
+            <guid>https://hitekredneck.io/blog/a_new_portfolio_for_a_new_year</guid>
+            <pubDate>Mon, 27 Dec 2021 22:02:06 GMT</pubDate>
+            <content:encoded><![CDATA[
+### What was wrong with the last one?:
+
+There wasn't anything wrong with the original portfolio website but I felt it needed a little of my touch in it. My original portfolio site was a Bootstrap template site that while it looked pleasing, didn't show any of my skills in my tool box. I was able to show things I had built but it didn't leave me feeling all warm and fuzzy since I had not built any of it myself.
+
+## Basic React, Gatsby, or NextJS
+
+I briefly considered building the site completly from scratch but I already have a site that I have built with React/Redux and it works well. It does have a blog and is built on a MERN stack.
+I thought that I would move everything over into Gatsby since I had heard great things about it. I split the static HTML from the Bootstrap site into small sections and made components out of them since Gatsby builds on React under the hood. Everything went well until I removed Bootstrap and tried set out to style the site with CSS like the original Bootstrap template but with my own tweaks. This did not go so well.
+I had a little trouble replicating the layout of the Bootstrap site in my CSS. Everything devolved fairly quickly and I decided to try and integrate TailwindCSS into Gatsby to try to fix my issues with CSS. I was able to get some of the components to look similar but not quite right. I made an executive decision to toss the project and start over.
+I then found NextJS and I thought hard on this one as it was a new foundation for me. Still built on top of React but with some of it's own quirky features. I still used TailwindCSS since I wanted to give it a fair shake down to see if it was all that I heard it was cracked up to be.
+
+## TailwindCSS and NextJS
+
+There were a couple of integration steps to build the site with Tailwind and Next. I kept my original React components from the Gatsby site and removed all mention of any CSS classes in them. Starting with the Nav-Bar, I slowly built up the site how I thought it should look for this iteration. No more trying to duplicate the Bootstrap template look.
+There were a few stumbling blocks along the way that I was able to work through. There were a few spots where I added Tailwind class names to a couple of different parts in the code that caused me a few headaches. I'm sad to say that I spent quite a bit of time trying to track down what was causing my CSS to not work properly. But, I finally tracked down the issue and removed the offending class names or even some divs that were un-needed.
+
+## Adding a blog with MDX
+
+I had decided early on that I wanted to build a tech blog into my portfolio. I had thought about using a database like I did in my other personal site but I quickly nixed that idea in favor of MDX. The only requirement I had was I wanted it to have syntax highlighted code blocks. I was able to drop in the blog design fairly easily.
+I then had a little difficulty sprinkling in the MDX into the existing setup. I had a couple of issues with the package `next-mdx-remote`.
+What I had found was that `next-mdx-remote` underwent some breaking changes earlier this year. That package's documents leave a lot to be desired as they didn't help with the integration that I needed and wanted. I looked at tutorials for using MDX with that package and was sorely disappointed even the newest ones utilized the old format for working with `next-mdx-remote`.  
+I looked through StackOverflow with no help in sight for my problems. I think chose to throw a hail mary at Github and I was able to search through repositories that used the syntax that I was using and finally found valid piece of code that lead me to the aha moment and made everything click.
+I then integrated `remark-prism` and `prism-tmemes` in to my code so that I could have my code block syntax highlighting. It worked very nicely. That was the easiest part of this build by far.
+
+The final portion that took a little researching and building of new Ubuntu Server running iRedMail so that I had my own personal e-mail server. I then integrated a contact form with `sanitize-html`, `react-google-recaptcha` and `nodemailer` to have an easy way for people to contact me without publicly posting any email or contact details.
+
+## Conclusion
+
+I hope to be able to provide a little more information on my particular pain points during this project in an upcoming post.
+]]></content:encoded>
+            <author>dave@hitekredneck.io (Dave Beidle)</author>
+        </item>
+        <item>
+            <title><![CDATA[An Introduction]]></title>
+            <link>https://hitekredneck.io/blog/an_introduction</link>
+            <guid>https://hitekredneck.io/blog/an_introduction</guid>
+            <pubDate>Sat, 25 Dec 2021 23:30:39 GMT</pubDate>
+            <content:encoded><![CDATA[
+## Who Am I?:
+
+As you have undoubtedly seen if you have look at my About page, I'm Dave. I have been working in the tech industry for the last 16 years though I have been into computers since the mid 1990s.
+
+### Technology background
+
+I first created webpages on the old Geocities site back in the 1990s. A few of them were pretty cool and I made do with what I had coding with static HTML. CSS wasn't even a thing yet back then. Like many in the late 90's I had a MySpace page and had customized it as much as I could. In the early 2000's I helped to manage my car club's forums which was built on vBulletin. I briefly tried my hand at PHP but did not follow through with it. I have built multiple static webpages from the 90s to the 00s on various platforms that are were out there including my own domain on a VPS around the 2003-2005 area. It suited what I needed.
+
+### Network Engineering
+
+I got lucky to have gotten a chance to work at a company based out of St. Louis, MO as a front line Network Technical Service Representative. This was my entry to learning about Networking. I stuck with that company for 15 years and through several promotions I had the title of Technical Service Engineer and supported client specific environments in the realm of Networking, Security, and Load Balancing technologies.
+
+### Learning to code - Python
+
+I got very interested in Python about 4 years ago at the urging of my manager at the time. He helped me when I had questions and I helped to build a custom internal API that would lead to a new Network Automation team being created. Unfortunately, they did not have enough head count to pull me over so I could continue my Python coding in practice at work.
+
+### Learning to code - JavaScript/ReactJS
+
+That same previous manager also got me interested in learning about ReactJS. I found a course on Udemy for React and took the dive 3 years ago into learning how things worked. I should have taken a vanilla JavaScript course first but I did not quite understand at the time how intertwined it all was. I did eventually go back and take a vanilla JS course and have not looked back. I love coding in React. It brings me a sort of calm I never had and it's just awesome to see something I have ceated come to life on the screen in front of me.
+
+### Where I'm at now...
+
+I am unfortunately no longer with my original tech company but did make a move to doing Network & Security Engineering at a new company. I'm still coding in Python and JavaScript with a focus mostly on React but I am also taking a journey to other frameworks. I have done a little bit with Vue and see the benefits of Quasar. This site is built with React/NextJS and I couldn't be happier with the outcome so far.
+
+### What Is this site for?
+
+I built this site to put my work out there. I would love to move over into a Front End or even Full Stack Developer Role. While I love what I do in Networking, it doesn't bring me the joy and calm that coding does. I plan to write some technical blog posts on the technologies that interest me and maybe even some that don't. It's all up in the air right now.
+
+### Other interesting information about me:
+
+I am an automotive enthusiast. I like everything from old school Hot Rods to Imports to Supercars. I currently own a GMC Sierra Denali, an 04 Acura RSX, and a 49 Chevy truck. I love working on cars in all facets. I am a railfan (person who loves trains) and model railroader. I am an amateur photographer and enjoy any time I can break out my camera. I like almost all things SCI-FI including both StarTrek and Star Wars. My favorite shows are NCIS (all of them), FireFly, The Good Doctor, and Eureka. My favorite movies are Serenity (the one that is in the FireFly universe), American Graffiti, Gone in 60 Seconds (both the original and the remake), and Dazed and Confused.
+
+### Wrapping Up
+
+Thank you for browsing and reading this. If you like what you see here, send me over a tag on Twitter (link in the footer) or feel free to test drive my contact page.
+
+Thanks! --Dave
+]]></content:encoded>
+            <author>dave@hitekredneck.io (Dave Beidle)</author>
+        </item>
+    </channel>
+</rss>

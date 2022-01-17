@@ -4,6 +4,7 @@ import Image from "next/image";
 import { getAllPosts } from "../../lib/data";
 import { shimmer, toBase64 } from "../../lib/blur";
 import getDate from "../../lib/getDate";
+import sortPosts from "../../lib/sortPosts";
 
 export default ({ posts }) => {
   return (
@@ -24,15 +25,7 @@ export default ({ posts }) => {
 
 export async function getStaticProps() {
   const allPosts = getAllPosts();
-  const allPostsSorted = allPosts.sort(({ date: a }, { date: b }) => {
-    if (a < b) {
-      return 1;
-    } else if (a > b) {
-      return -1;
-    } else {
-      return 0;
-    }
-  });
+  const allPostsSorted = sortPosts(allPosts);
   return {
     props: {
       posts: allPostsSorted.map(({ data, content, slug }) => ({
