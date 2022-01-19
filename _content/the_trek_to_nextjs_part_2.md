@@ -2,7 +2,7 @@
 title: "The Trek to NextJS part 2"
 layout: "post"
 date: "2022-01-01T15:27:20.657Z"
-summary: "I had a few issues getting the blog portion to work properly. I explain more in detail"
+summary: "I had a few issues getting the blog portion to work properly. I explain more in detail in this post. Part 2 of my journey."
 hero: "/blog_heros/fuji-sakura.jpg"
 hero_alt: "Mount Fuji with Cherry Blossom Tree"
 tags: ["next", "javascript", "react", "tailwindcss", "blog", "MDX", "Markdown"]

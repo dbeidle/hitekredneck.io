@@ -23,7 +23,6 @@ export default props => {
     }
   };
   if (isBrowser) {
-    console.log(info.type);
     return ReactDOM.createPortal(
       <div
         className="fixed insert-0 bg-gray-600 bg-opacity-50 overflow-y-auto h-full w-full"

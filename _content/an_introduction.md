@@ -2,7 +2,7 @@
 title: "An Introduction"
 layout: "post"
 date: "2021-12-25T23:30:39.578Z"
-summary: "Starting out with a bit of an introduction to the world of me."
+summary: "Starting out with a bit of an introduction to the world of me. Meet the real Dave Beidle in this article."
 hero: "/blog_heros/torii-5889982.jpg"
 hero_alt: "Torii Gate"
 tags: ["next", "javascript", "react", "blog"]

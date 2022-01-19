@@ -2,7 +2,7 @@
 title: "The Trek to NextJS part 1"
 layout: "post"
 date: "2021-12-29T14:00:34.444Z"
-summary: "The trials and tribulations of converting my Bootstrap portfolio over to NextJS and TailwindCSS"
+summary: "The trials and tribulations of converting my Bootstrap portfolio over to NextJS and TailwindCSS. Part 1 of my journey."
 hero: "/blog_heros/japan-1706942.jpg"
 hero_alt: "Mount Fuji"
 tags: ["next", "javascript", "react", "tailwindcss", "blog"]

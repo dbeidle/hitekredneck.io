@@ -22,7 +22,6 @@ export default function handler(req, res) {
       allowedTags: [],
       allowedAttributes: {},
     });
-    console.log(msg);
     const mailData = {
       from: process.env.FROM_ADDRESS,
       to: note.email,

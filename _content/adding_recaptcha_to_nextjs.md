@@ -2,7 +2,7 @@
 title: "Adding reCaptcha to NextJS"
 layout: "post"
 date: "2022-01-11T17:05:36.929Z"
-summary: "I added Google's reCaptcha to my contact page inside NextJS"
+summary: "I added Google's reCaptcha to my contact page inside NextJS to try and keep spammers away from my email address!"
 hero: "/blog_heros/stlouis_arch.jpg"
 hero_alt: "Gateway Arch in St. Louis, Missouri"
 tags: ["next", "javascript", "react", "reCaptcha", "blog"]
