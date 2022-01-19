@@ -24,14 +24,14 @@ export default ({ title, date, fullDate, content, hero, summary, slug }) => {
         <meta property="og:title" content={title} />
         <meta property="og:type" content="article" />
         <meta property="og:description" content={summary} />
-        <meta property="og:author" content="David Beidle II" />
+        <meta name="author" content="David Beidle II" />
         <meta property="article:publisher" content="https://hitekredneck.io" />
         <meta property="article:published_time" content={fullDate} />
         <meta property="article:modified_time" content={fullDate} />
       </Head>
       <div className="text-sb-dark border-b-2 border-sb-dark border-opacity-75 border-solid pb-2">
         <h1 className="text-4xl font-medium ">{title}</h1>
-        <h2 className="text-md">{date}</h2>
+        <time className="text-md">{date}</time>
       </div>
       <article className="pt-3 prose min-w-full">
         <MDXRemote {...content} />
