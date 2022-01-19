@@ -5,7 +5,7 @@ import { getAllPosts } from "../../lib/data";
 import getDate from "../../lib/getDate";
 import remarkPrismPlugin from "remark-prism";
 
-export default ({ title, date, content, hero, summary, slug }) => {
+export default ({ title, date, fullDate, content, hero, summary, slug }) => {
   return (
     <div className=" w-3/4 lg:w-1/2 px-10 h-full overflow-scroll m-auto text-sb-norm border-sb-dark border-solid border-2 rounded-lg bg-sb-light shadow p-3 mt-20 ">
       <Head>
@@ -22,7 +22,12 @@ export default ({ title, date, content, hero, summary, slug }) => {
           content={`https://hitekredneck.io/blog/${slug}`}
         />
         <meta property="og:title" content={title} />
+        <meta property="og:type" content="article" />
         <meta property="og:description" content={summary} />
+        <meta property="og:author" content="David Beidle II" />
+        <meta property="article:publisher" content="https://hitekredneck.io" />
+        <meta property="article:published_time" content={fullDate} />
+        <meta property="article:modified_time" content={fullDate} />
       </Head>
       <div className="text-sb-dark border-b-2 border-sb-dark border-opacity-75 border-solid pb-2">
         <h1 className="text-4xl font-medium ">{title}</h1>
@@ -52,6 +57,7 @@ export async function getStaticProps(context) {
     props: {
       ...data,
       date: getDate(data.date),
+      fullDate: data.date,
       content: mdxSource,
       slug: slug,
     },
