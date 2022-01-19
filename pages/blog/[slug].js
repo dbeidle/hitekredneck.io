@@ -5,12 +5,12 @@ import { getAllPosts } from "../../lib/data";
 import getDate from "../../lib/getDate";
 import remarkPrismPlugin from "remark-prism";
 
-export default ({ title, date, fullDate, content, hero, summary, slug }) => {
+export default ({ title, date, content, hero, summary, slug }) => {
   return (
     <div className=" w-3/4 lg:w-1/2 px-10 h-full overflow-scroll m-auto text-sb-norm border-sb-dark border-solid border-2 rounded-lg bg-sb-light shadow p-3 mt-20 ">
       <Head>
         <title>{title}</title>
-        <meta name="twitter:card" content="summary" />
+        <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:image" content={`https://hitekredneck.io${hero}`} />
         <meta name="twitter:description" content={summary} />
