@@ -13,6 +13,7 @@ export default ({ title, date, content, hero, summary, slug }) => {
         <meta name="twitter:card" content="summary" />
         <meta name="twitter:title" content={title} />
         <meta name="twitter:image" content={`https://hitekredneck.io${hero}`} />
+        <meta property="twitter:description" content={summary} />
         <meta name="twitter:creator" content="@lifeofdave" />
         <meta property="og:site_name" content="HiTekRedneck" />
         <meta property="og:image" content={`https://hitekredneck.io${hero}`} />
