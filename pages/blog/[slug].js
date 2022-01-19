@@ -26,8 +26,11 @@ export default ({ title, date, fullDate, content, hero, summary, slug }) => {
         <meta property="og:description" content={summary} />
         <meta name="author" content="David Beidle II" />
         <meta property="article:publisher" content="https://hitekredneck.io" />
-        <meta property="article:published_time" content={fullDate} />
-        <meta property="article:modified_time" content={fullDate} />
+        <meta
+          name="publish_date"
+          property="og:publish_date"
+          content={fullDate}
+        />
       </Head>
       <div className="text-sb-dark border-b-2 border-sb-dark border-opacity-75 border-solid pb-2">
         <h1 className="text-4xl font-medium ">{title}</h1>
