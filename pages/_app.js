@@ -5,7 +5,7 @@ import Layout from "../components/layout";
 function MyApp({ Component, pageProps }) {
   return (
     <Layout>
-      <div className="m-auto mt-20 mb-5">
+      <div className="w-full h-full m-auto mt-20 flex-grow mb-5">
         <Component {...pageProps} />
       </div>
     </Layout>
