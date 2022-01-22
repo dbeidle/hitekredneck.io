@@ -6,7 +6,7 @@ export default function Layout({ children }) {
   return (
     <div className="flex w-screen min-h-screen flex-col" id="parent">
       <NavBar />
-      <div className="flex-grow">{children}</div>
+      <div className="flex-1">{children}</div>
       <ScrollTop />
 
       <Footer />
