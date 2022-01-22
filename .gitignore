@@ -14,3 +14,6 @@ yarn.lock
 .node_repl_history
 .next
 .env
+
+# Other dynamic files
+public/rss.xml
