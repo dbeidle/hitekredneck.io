@@ -11,18 +11,18 @@ export default function Footer() {
     <footer className="w-full text-center text-xs md:text-sm pb-2">
       <div className="social d-flex justify-content-center text-3xl text-sb-med pb-2">
         <a
-          className="mx-4"
+          className="mx-2"
           href="https://twitter.com/LifeofDave"
           target="_blank">
           <FontAwesomeIcon icon={faTwitter}></FontAwesomeIcon>
         </a>
         <a
-          className="mx-4"
+          className="mx-2"
           href="https://www.linkedin.com/in/david-beidle/"
           target="_blank">
           <FontAwesomeIcon icon={faLinkedin}></FontAwesomeIcon>
         </a>
-        <a className="mx-4" href="https://github.com/dbeidle" target="_blank">
+        <a className="mx-2" href="https://github.com/dbeidle" target="_blank">
           <FontAwesomeIcon icon={faGithub}></FontAwesomeIcon>
         </a>
       </div>
