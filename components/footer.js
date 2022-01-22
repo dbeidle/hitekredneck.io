@@ -9,7 +9,7 @@ export default function Footer() {
   const date = new Date().getFullYear();
   return (
     <footer className="w-full text-center text-xs md:text-sm pb-2">
-      <div className="social justify-content-center text-3xl text-sb-med pb-2">
+      <div className="justify-content-center text-3xl text-sb-med pb-2">
         <a
           className="mx-5"
           href="https://twitter.com/LifeofDave"
