@@ -28,7 +28,7 @@ export default function handler(req, res) {
       bcc: "dave@hitekredneck.io",
       subject: `New Message from ${note.name}`,
       text: `This email was sent form an unmonitored account. Your message from https://hitekredneck.io  is below: \n ${msg}`,
-      html: `<div><p>This email was sent form an unmonitored account. Your message from <a href="https://hitekredneck.io">https://hitekredneck.io</a> is below:</p><br /></p><p>${msg}</p></div>`,
+      html: `<div><p>This email was sent form an unmonitored account. Your message from <a href="https://hitekredneck.io">https://hitekredneck.io</a> is below:</p><br /><p>${msg}</p></div>`,
     };
 
     transport.sendMail(mailData, (err, info) => {

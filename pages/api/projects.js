@@ -65,21 +65,21 @@ export default function handler(req, res) {
           "Google Oauth2",
         ],
       },
-      {
-        id: 6,
-        projectName: "Face Recognition",
-        projectImg: "/images/faces.png",
-        projectLink: "https://faces.drivelikeyastoleit.com",
-        projectDescription:
-          "Application that will pick out faces in a picture and put a box around them",
-        projectStack: [
-          "Javascript",
-          "React",
-          "NodeJS",
-          "Clarifai API",
-          "PostgreSQL",
-        ],
-      },
+      // {
+      //   id: 6,
+      //   projectName: "Face Recognition",
+      //   projectImg: "/images/faces.png",
+      //   projectLink: "https://faces.drivelikeyastoleit.com",
+      //   projectDescription:
+      //     "Application that will pick out faces in a picture and put a box around them",
+      //   projectStack: [
+      //     "Javascript",
+      //     "React",
+      //     "NodeJS",
+      //     "Clarifai API",
+      //     "PostgreSQL",
+      //   ],
+      // },
       {
         id: 7,
         projectName: "Hello World",
