@@ -63,6 +63,8 @@ export default function handler(req, res) {
           "Sass",
           "Stripe API",
           "Google Oauth2",
+          "Jest",
+          "Enzyme",
         ],
       },
       // {
