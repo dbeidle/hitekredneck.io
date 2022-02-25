@@ -25,17 +25,37 @@ export default function Projects({ projects }) {
 
 function ProjectStack({ projectStackItem }) {
   return (
-    <span className="border-sb-dark border-2 m-1 p-1 rounded-xl hover:transition hover:bg-white hover:ease-in-out hover:duration-700">
+    <span className="border-sb-dark border-2 m-1 p-1 rounded-xl">
       {projectStackItem}
     </span>
   );
 }
 
+function CallToAction(urls) {
+  const { projectLink, project_gh_url } = urls;
+  return (
+    <div className="mt-2">
+      <a href={projectLink}>
+        <button className="border-sb-dark border-2 m-1 p-1 rounded-xl bg-sb-med hover:bg-sb-norm hover:text-sb-light hover:border-white hover:drop-shadow-lg ">
+          View Site
+        </button>
+      </a>
+      {project_gh_url !== null ? (
+        <a href={project_gh_url}>
+          <button className="border-sb-dark border-2 m-1 p-1 rounded-xl bg-sb-med hover:bg-sb-norm hover:text-sb-light hover:border-white hover:drop-shadow-lg ">
+            View Source
+          </button>
+        </a>
+      ) : null}
+    </div>
+  );
+}
+
 function ProjectListItem({
-  id,
   projectName,
   projectImg,
   projectLink,
+  project_gh_url,
   projectDescription,
   projectStack,
 }) {
@@ -71,6 +91,11 @@ function ProjectListItem({
             <span className="text-md font-semibold">Description:</span>
             <br />
             {projectDescription}
+            <br />
+            <CallToAction
+              projectLink={projectLink}
+              project_gh_url={project_gh_url}
+            />
           </div>
           <div>
             <p className="mt-2 text-lg font-medium pb-2">Tech Stack:</p>
