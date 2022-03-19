@@ -1,7 +1,7 @@
 ---
 title: "Create a Reusable Card Component"
 layout: "post"
-date: "2021-1032-27T22:02:06.006Z"
+date: "2022-03-27T15:44:06.006Z"
 summary: "I had a need to build a reusable card component for a project I'm working on. I will show you how I did it."
 hero: "/blog_heros/circuits.jpg"
 hero_alt: "illuminated circuit board"
