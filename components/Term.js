@@ -40,7 +40,7 @@ export default () => {
     }
 
     if (status.classList.contains("active")) {
-      setLoaded(true);
+      setTimeout(() => setLoaded(true), 5000);
     }
 
     function type() {
