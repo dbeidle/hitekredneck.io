@@ -52,22 +52,22 @@ export default function handler(req, res) {
           "Enzyme",
         ],
       },
-      // {
-      //   id: 4,
-      //   projectName: "Face Recognition",
-      //   projectImg: "/images/faces.png",
-      //   projectLink: "https://faces.drivelikeyastoleit.com",
-      //   project_gh_url: "https://github.com/dbeidle/face-recognition",
-      //   projectDescription:
-      //     "Application that will pick out faces in a picture and put a box around them",
-      //   projectStack: [
-      //     "Javascript",
-      //     "React",
-      //     "NodeJS",
-      //     "Clarifai API",
-      //     "PostgreSQL",
-      //   ],
-      // },
+      {
+        id: 4,
+        projectName: "Face Recognition",
+        projectImg: "/images/faces.png",
+        projectLink: "https://faces.drivelikeyastoleit.com",
+        project_gh_url: "https://github.com/dbeidle/face-recognition",
+        projectDescription:
+          "Application that will pick out faces in a picture and put a box around them",
+        projectStack: [
+          "Javascript",
+          "React",
+          "NodeJS",
+          "Clarifai API",
+          "PostgreSQL",
+        ],
+      },
       {
         id: 5,
         projectName: "Hello World",
