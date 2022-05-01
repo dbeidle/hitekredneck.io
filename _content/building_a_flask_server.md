@@ -1,7 +1,7 @@
 ---
 title: "Building a Flask Server"
 layout: "post"
-date: "2022-04-29T01:44:35.036Z"
+date: "2022-04-29T12:44:35.036Z"
 summary: "I wanted to test out Flask on Python for creating a simple web server. It was easier in than I had imagined."
 hero: "/blog_heros/python.jpg"
 hero_alt: "Torii Gate"
@@ -19,11 +19,14 @@ If you don't already have it installed, I would highly suggest downloading [Pyth
 ## Installing Packages:
 
 You can find a multitude of articles out there for how to install a Python package. I use pip which comes bundled with Python. We only need to install one package for this build so open a terminal window and type the following:
-`pip install Flask`
+
+```sh
+pip install Flask
+```
 
 ## The Build:
 
-Create a folder on your computer and create a blank file called main.py. In the same folder, create a file called `templates` and another called `static `.
+Create a folder on your computer and create a blank file called main.py. In the same folder, create a file called `templates` and another called `static`.
 
 Open the main.py file and let's start building. We will start by importing Flask into the file.
 
