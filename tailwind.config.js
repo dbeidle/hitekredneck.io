@@ -6,7 +6,7 @@ module.exports = {
       "./components/**/*.{js,ts,jsx,tsx}",
     ],
     options: {
-      safelist: ["prose"],
+      whitelist: ["prose"],
     },
   },
   darkMode: false, // or 'media' or 'class'
