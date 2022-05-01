@@ -1,11 +1,6 @@
 module.exports = {
   mode: "jit",
-  purge: {
-    content: [
-      "./pages/**/*.{js,ts,jsx,tsx}",
-      "./components/**/*.{js,ts,jsx,tsx}",
-    ],
-  },
+  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -41,45 +36,44 @@ module.exports = {
           "100%": { transform: "scale(1, 1)" },
         },
       },
-    },
-    animation: {
-      blinker: "blinker 0.9s steps(2, start) infinite",
-      greyscale: "greyscale 2.5s ease-in-out",
-      zoomIn: "zoomIn 5s ease-in",
-    },
-
-    typography: {
-      DEFAULT: {
-        css: {
-          color: "#31697e",
-          a: {
-            color: "#3182ce",
-            "&:hover": {
-              color: "#4682b4",
-              cursor: "pointer",
+      animation: {
+        blinker: "blinker 0.9s steps(2, start) infinite",
+        greyscale: "greyscale 2.5s ease-in-out",
+        zoomIn: "zoomIn 5s ease-in",
+      },
+      typography: {
+        DEFAULT: {
+          css: {
+            color: "#31697e",
+            a: {
+              color: "#3182ce",
+              "&:hover": {
+                color: "#2c5282",
+                color: "#4682b4",
+                cursor: "pointer",
+              },
             },
-          },
-          h1: {
-            color: "#31697e",
-            fontWeight: "normal",
-          },
-          h2: {
-            color: "#31697e",
-            fontWeight: "normal",
-          },
-          h3: {
-            color: "#31697e",
-            fontWeight: "normal",
-          },
-          h4: {
-            color: "#31697e",
-            fontWeight: "normal",
+            h1: {
+              color: "#31697e",
+              fontWeight: "normal",
+            },
+            h2: {
+              color: "#31697e",
+              fontWeight: "normal",
+            },
+            h3: {
+              color: "#31697e",
+              fontWeight: "normal",
+            },
+            h4: {
+              color: "#31697e",
+              fontWeight: "normal",
+            },
           },
         },
       },
     },
   },
-
   variants: {
     extend: {
       display: ["hover", "focus"],
