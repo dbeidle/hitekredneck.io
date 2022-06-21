@@ -9,7 +9,7 @@ export default function handler(req, res) {
         projectLink: "https://drivelikeyastoleit.com",
         project_gh_url: null,
         projectDescription:
-          "This is my first solo project. A personal website with Blog and Image gallery. Built with a MERN stack with a redis kicker. Dockerized MongoDB and Redis instances. Always will be a work in progress.",
+          "This is a  personal website with Blog and Image gallery. Built with a MERN stack with a redis kicker. Dockerized MongoDB and Redis instances. It will always be a work in progress.",
         projectStack: [
           "Javascript",
           "React",
@@ -19,6 +19,7 @@ export default function handler(req, res) {
           "Redis",
           "Oauth2",
           "Material UI",
+          "Docker",
         ],
       },
       {
@@ -38,7 +39,7 @@ export default function handler(req, res) {
         projectLink: "https://crwn.drivelikeyastoleit.com",
         project_gh_url: "https://github.com/dbeidle/crwn-clothing",
         projectDescription:
-          "This site was based on a course I took. It's a very thorough example that I first learned React on. This is a fully functional store with Stripe API integration for payments using a test Credit Card Number. ",
+          "This is a fully functional Web Store built completely in React with Google Firebase for Authentication and NOSQL Database. It is integrated into the Stripe API for mock credit card transactions using a test credit card number.",
         projectStack: [
           "Javascript",
           "React",
@@ -59,13 +60,14 @@ export default function handler(req, res) {
         projectLink: "https://faces.drivelikeyastoleit.com",
         project_gh_url: "https://github.com/dbeidle/face-recognition",
         projectDescription:
-          "Application that will pick out faces in a picture and put a box around them",
+          "This is a fun little application that utilizes the Clarifai API to pick out faces from pictures and put bounding boxes around them. It uses bcrypt and PostgreSQL for authentication and storage needs.",
         projectStack: [
           "Javascript",
           "React",
           "NodeJS",
           "Clarifai API",
           "PostgreSQL",
+          "bcrypt",
         ],
       },
       {
@@ -75,7 +77,7 @@ export default function handler(req, res) {
         projectLink: "https://hello-world.hitekredneck.io",
         project_gh_url: "https://github.com/dbeidle/hello_world",
         projectDescription:
-          "Fun little Hello World app that has a YouTube video of Hello World by Lady Antebellum",
+          "Fun little Hello World app that has a YouTube video of Hello World by Lady Antebellum.",
         projectStack: ["Javascript", "Vue JS", "CSS", "Babel", "ES Lint"],
       },
     ]);
