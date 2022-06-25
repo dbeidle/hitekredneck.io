@@ -14,7 +14,7 @@ Have you ever wanted to build a quick and easy webserver to play with your html,
 
 ### Create your project directory
 
-I am using a Mac so the outputs and commands you see below are tailored towards it and the comnand line interface (cli). You can just as easily do most of the below in your operating system and your preferred IDE (sublime, atom, or vscode).
+I am using a Mac so the outputs and commands you see below are tailored towards it and the command line interface (cli). You can just as easily do most of the below in your operating system and your preferred IDE (sublime, atom, or vscode).
 
 The first step is to create a folder on your system to hold your project. I am using a directory called test_server. I prefer to use yarn as my package manager instead of npm but this is all up to your choice. If you don't have yarn installed you can install it from [yarnpkg.com](https://yarnpkg.com/). If you prefer to use npm I will provide you with the basics to get a project up and running.
 

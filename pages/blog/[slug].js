@@ -3,6 +3,7 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 import { getAllPosts } from "../../lib/data";
 import getDate from "../../lib/getDate";
+import counter from "../api/counter";
 import remarkPrismPlugin from "remark-prism";
 
 export default ({ title, date, content, hero, summary, slug }) => {
@@ -50,6 +51,19 @@ export async function getStaticProps(context) {
       remarkPlugins: [remarkPrismPlugin],
     },
   });
+
+  const count = await fetch(`http://localhost:5600/api/counter`, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ title: `${slug}` }),
+  });
+  const success = await count;
+  if (success) {
+    `logged`;
+  }
 
   return {
     props: {
