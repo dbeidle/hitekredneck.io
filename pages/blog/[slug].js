@@ -3,7 +3,6 @@ import { serialize } from "next-mdx-remote/serialize";
 import { MDXRemote } from "next-mdx-remote";
 import { getAllPosts } from "../../lib/data";
 import getDate from "../../lib/getDate";
-import counter from "../api/counter";
 import remarkPrismPlugin from "remark-prism";
 
 export default ({ title, date, content, hero, summary, slug }) => {
