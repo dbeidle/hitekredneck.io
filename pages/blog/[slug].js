@@ -51,19 +51,6 @@ export async function getStaticProps(context) {
     },
   });
 
-  const count = await fetch(`http://localhost:5600/api/counter`, {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ title: `${slug}` }),
-  });
-  const success = await count;
-  if (success) {
-    `logged`;
-  }
-
   return {
     props: {
       ...data,
