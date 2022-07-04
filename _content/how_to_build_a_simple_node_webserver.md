@@ -10,7 +10,7 @@ tags: ["node", "javascript", "express", "server", "yarn", "morgan", "dotenv"]
 
 ## Building a Node Webserver
 
-Have you ever wanted to build a quick and easy webserver to play with your html,css, and javascript skills? I have and I built a very simple Node webserver with express and javascript.
+Have you ever wanted to build a quick and easy webserver to play with your html, css, and javascript skills? I have and I built a very simple Node webserver with express and javascript and am going to share it with you now.
 
 ### Create your project directory
 
@@ -85,7 +85,7 @@ Next we will start with installing the packages we will use for this server. I p
 yarn add express morgan dotenv nodemon
 ```
 
-Once you have done that you will then see those entries in your package.json file and a new directory called node_modules as well as a package.lock (npm) or yarn.lock (yarn). We wont't be modifying naything within the lock files or in the node_modules directory but we will need to create a .gitignore file to not copy those files over to your repository if you choose to do so. I will not be pushing this to git but will show you my basic .gitignore for these types of things.
+Once you have done that you will then see those entries in your package.json file and a new directory called node_modules as well as a package.lock (npm) or yarn.lock (yarn). We wont't be modifying anything within the lock files or in the node_modules directory but we will need to create a .gitignore file to not copy those files over to your repository if you choose to do so. I will not be pushing this to git but will show you my basic .gitignore for these types of things.
 
 ```sh
 dave:test_server/ $ ls -la
@@ -179,7 +179,7 @@ dave:test_server/ $
 
 ### Success!
 
-You now have a successfully running server running on node. Let's not stop here though. We want a little more functionality out of this server.
+You now have a successfully running server on node. Let's not stop here though. We want a little more functionality out of this server.
 
 ### Node Mon
 
@@ -271,7 +271,7 @@ API listening on 8080
 
 ```
 
-Now when you test via curl or browser, you will see an output in your terminal that looks like the below. What the information is telling you is the source address that you came from in our case it's 127.0.0.1 which is the localhost address. You also see the date & time of the request the method used ("GET"), the http version the request is utilizing ("1.1), the status code (200), and the user agent being utlized ("curl/7/79/1").
+Now when you test via curl or browser, you will see an output in your terminal that looks like the below. What the information is telling you is the source address that you came from in our case it's 127.0.0.1 which is the localhost address. You also see the date & time of the request the method used ("GET"), the http version the request is utilizing (1.1), the status code (200), and the user agent being utlized ("curl/7/79/1").
 
 ```sh
 ::ffff:127.0.0.1 - - [18/Jun/2022:17:24:43 +0000] "GET / HTTP/1.1" 200 15 "-" "curl/7.79.1"
